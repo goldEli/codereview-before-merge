@@ -79,23 +79,15 @@ if [[ -z "$BRANCH" ]]; then
 fi
 
 if [[ "$WITH_LIBS" -eq 1 ]]; then
-  PROMPT="$(cat <<EOF
-Pre-merge review: main repo on ${BRANCH}, merge target ${TARGET}. For libs/, review only the libs checkout on branch ${BRANCH} as its own repo—do not use the parent repo's submodule/gitlink pointer or recorded libs commit as the review baseline.
-
-Read-only: do not edit or create files.
-
-Output: full report in English, then a full Chinese translation—include both.
-EOF
-)"
+  printf -v PROMPT '%s\n\n%s\n\n%s' \
+    "Pre-merge review: main repo on ${BRANCH}, merge target ${TARGET}. For libs/, review only the libs checkout on branch ${BRANCH} as its own repo - do not use the parent repo's submodule/gitlink pointer or recorded libs commit as the review baseline." \
+    "Read-only: do not edit or create files." \
+    "Output: full report in English, then a full Chinese translation - include both."
 else
-  PROMPT="$(cat <<EOF
-Pre-merge review: main repo on ${BRANCH}, merge into ${TARGET}; libs out of scope.
-
-Read-only: do not edit or create files.
-
-Output: full report in English, then a full Chinese translation—include both.
-EOF
-)"
+  printf -v PROMPT '%s\n\n%s\n\n%s' \
+    "Pre-merge review: main repo on ${BRANCH}, merge into ${TARGET}; libs out of scope." \
+    "Read-only: do not edit or create files." \
+    "Output: full report in English, then a full Chinese translation - include both."
 fi
 
 REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || {
