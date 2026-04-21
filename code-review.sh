@@ -79,12 +79,24 @@ if [[ -z "$BRANCH" ]]; then
 fi
 
 if [[ "$WITH_LIBS" -eq 1 ]]; then
-  PROMPT="Code review: ${BRANCH} + libs@${BRANCH} → ${TARGET}."
+  PROMPT="$(cat <<EOF
+Pre-merge review: main repo on ${BRANCH}, libs on ${BRANCH}, intended merge into ${TARGET}.
+
+Read-only: do not edit or create files.
+
+Output: full report in English, then a full Chinese translation—include both.
+EOF
+)"
 else
-  PROMPT="Code review: ${BRANCH} → ${TARGET}; libs out of scope."
+  PROMPT="$(cat <<EOF
+Pre-merge review: main repo on ${BRANCH}, merge into ${TARGET}; libs out of scope.
+
+Read-only: do not edit or create files.
+
+Output: full report in English, then a full Chinese translation—include both.
+EOF
+)"
 fi
-PROMPT+=" Code review only—do not modify any code or files."
-PROMPT+=" Deliver the review report in English, then a Chinese translation; keep both."
 
 REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || {
   echo "$(basename "$0"): 当前目录不在 git 仓库内，无法切换分支" >&2
