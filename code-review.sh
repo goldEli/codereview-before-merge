@@ -80,7 +80,7 @@ fi
 
 if [[ "$WITH_LIBS" -eq 1 ]]; then
   PROMPT="$(cat <<EOF
-Pre-merge review: main repo on ${BRANCH}, libs on ${BRANCH}, intended merge into ${TARGET}.
+Pre-merge review: main repo on ${BRANCH}, merge target ${TARGET}. For libs/, review only the libs checkout on branch ${BRANCH} as its own repo—do not use the parent repo's submodule/gitlink pointer or recorded libs commit as the review baseline.
 
 Read-only: do not edit or create files.
 
